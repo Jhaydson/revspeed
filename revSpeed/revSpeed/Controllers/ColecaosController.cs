@@ -12,128 +12,126 @@ using revSpeed.Models;
 
 namespace revSpeed.Controllers
 {
-    public class CoresController : Controller
+    public class ColecaosController : Controller
     {
         private RevSpeedContext db = new RevSpeedContext();
 
-        // GET: Cores
+        // GET: Colecaos
         public async Task<ActionResult> Index()
         {
-            return View(await db.Cors.ToListAsync());
+            return View(await db.Colecaos.ToListAsync());
         }
 
-        // GET: Cores/Details/5
+        // GET: Colecaos/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cor cor = await db.Cors.FindAsync(id);
-            if (cor == null)
+            Colecao colecao = await db.Colecaos.FindAsync(id);
+            if (colecao == null)
             {
                 return HttpNotFound();
             }
-            return View(cor);
+            return View(colecao);
         }
 
-        // GET: Cores/Create
+        // GET: Colecaos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Cores/Create
+        // POST: Colecaos/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CorId,Nome")] Cor cor)
+        public async Task<ActionResult> Create([Bind(Include = "ColecaoId,Nome,Lancamento,DataCreate")] Colecao colecao)
         {
             if (ModelState.IsValid)
             {
 
-                cor.DataCreate = DateTime.Now;
-
 			try{
 
-                db.Cors.Add(cor);
+                db.Colecaos.Add(colecao);
                 await db.SaveChangesAsync();
 			}
 				catch (System.Exception)
                 {
                     ModelState.AddModelError(string.Empty, "Não possível adicionar, por ter um item cadastrado com esse mesmo nome!");
-                    return View( cor);
+                    return View( colecao);
                     throw;
                 }
                 return RedirectToAction("Index");
             }
 
-            return View(cor);
+            return View(colecao);
         }
 
-        // GET: Cores/Edit/5
+        // GET: Colecaos/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cor cor = await db.Cors.FindAsync(id);
-            if (cor == null)
+            Colecao colecao = await db.Colecaos.FindAsync(id);
+            if (colecao == null)
             {
                 return HttpNotFound();
             }
-            return View(cor);
+            return View(colecao);
         }
 
-        // POST: Cores/Edit/5
+        // POST: Colecaos/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CorId,Nome")] Cor cor)
+        public async Task<ActionResult> Edit([Bind(Include = "ColecaoId,Nome,Lancamento,DataCreate")] Colecao colecao)
         {
             if (ModelState.IsValid)
             {
 			try{
 
-                db.Entry(cor).State = EntityState.Modified;
+                db.Entry(colecao).State = EntityState.Modified;
                 await db.SaveChangesAsync();
 			}
 				catch (System.Exception)
 					{
 						ModelState.AddModelError(string.Empty, "Não possível adicionar, por ter um item cadastrado com esse mesmo nome!");
-						return View(cor);
+						return View(colecao);
 						throw;
 					}
                 return RedirectToAction("Index");
             }
-            return View(cor);
+            return View(colecao);
         }
 
-        // GET: Cores/Delete/5
+        // GET: Colecaos/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cor cor = await db.Cors.FindAsync(id);
-            if (cor == null)
+            Colecao colecao = await db.Colecaos.FindAsync(id);
+            if (colecao == null)
             {
                 return HttpNotFound();
             }
-            return View(cor);
+            return View(colecao);
         }
 
-        // POST: Cores/Delete/5
+        // POST: Colecaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Cor cor = await db.Cors.FindAsync(id);
-            db.Cors.Remove(cor);
+            Colecao colecao = await db.Colecaos.FindAsync(id);
+            db.Colecaos.Remove(colecao);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

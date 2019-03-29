@@ -10,5 +10,7 @@ namespace revSpeed.Data
         }
 
         public System.Data.Entity.DbSet<revSpeed.Models.Cor> Cors { get; set; }
+
+        public System.Data.Entity.DbSet<revSpeed.Models.Colecao> Colecaos { get; set; }
     }
 }

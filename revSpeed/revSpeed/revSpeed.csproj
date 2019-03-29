@@ -174,6 +174,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ColecaosController.cs" />
     <Compile Include="Controllers\CoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -183,6 +184,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Colecao.cs" />
     <Compile Include="Models\Cor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -981,6 +983,11 @@
     <Content Include="Views\Cores\Details.cshtml" />
     <Content Include="Views\Cores\Edit.cshtml" />
     <Content Include="Views\Cores\Index.cshtml" />
+    <Content Include="Views\Colecaos\Create.cshtml" />
+    <Content Include="Views\Colecaos\Delete.cshtml" />
+    <Content Include="Views\Colecaos\Details.cshtml" />
+    <Content Include="Views\Colecaos\Edit.cshtml" />
+    <Content Include="Views\Colecaos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

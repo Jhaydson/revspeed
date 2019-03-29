@@ -1,0 +1,52 @@
+﻿@model revSpeed.Models.Colecao
+
+@{
+    ViewBag.Title = "Colecao";
+}
+
+
+
+
+
+<div class="container">
+    <div class="section">
+        <div class="col s12">
+            <div>
+                
+
+	<a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+    <a class=" waves-effect waves-light  btn #757575 grey darken-1" href="@Url.Action("Edit", new { id = Model.ColecaoId })"><i class="material-icons left">mode_edit</i>Editar</a>
+
+   
+
+            </div> <br />
+            <table class="Highlight striped">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th>Descrição</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+       <td> @Html.DisplayNameFor(model => model.Nome) </td>    
+      <td>  @Html.DisplayFor(model => model.Nome)</td>
+					</tr>
+					       <td> @Html.DisplayNameFor(model => model.Lancamento) </td>    
+      <td>  @Html.DisplayFor(model => model.Lancamento)</td>
+					</tr>
+					                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+  
+
+
+
+

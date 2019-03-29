@@ -1,0 +1,67 @@
+﻿@model revSpeed.Models.Colecao
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 center">
+                <div id="card-alert" class="card gradient-45deg-amber-amber center">
+                    <div class="card-content white-text">
+                        <p>
+                            <i class="material-icons">warning</i> Você tem certeza que costaria de excluir?
+                        </p>
+						<div class="card-content white-text">
+							<p> @Html.ValidationSummary(true, "")</p>
+						</div>
+                    </div>
+                    <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+                            <input type="submit" value="Deletar" class="btn btn-default" />
+                        </div>
+                    }
+
+                    <table class="Highlight striped">
+                        <thead class="">
+                            <tr>
+                                <th></th>
+                                <th>Descrição</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+						                            <tr>
+							
+                                <td>@Html.DisplayNameFor(model => model.Nome)</td>
+                                <td>@Html.DisplayFor(model => model.Nome)</td>
+								
+                            </tr>
+							                            <tr>
+							
+                                <td>@Html.DisplayNameFor(model => model.Lancamento)</td>
+                                <td>@Html.DisplayFor(model => model.Lancamento)</td>
+								
+                            </tr>
+							
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
