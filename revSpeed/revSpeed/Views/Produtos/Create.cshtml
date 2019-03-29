@@ -1,0 +1,152 @@
+﻿@model revSpeed.Models.Produto
+
+@{
+    ViewBag.Title = "Produto";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="section">
+            <div class="form-horizontal">
+
+                <div id="card-alert" class="card orange">
+                    <div class="card-content white-text">
+                        <p>@Html.ValidationSummary(true, "")</p>
+                    </div>
+                    <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                        <label>@Html.DisplayNameFor(model => model.Nome)</label>
+                    </div>
+                </div>
+
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CodProduto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CodProduto, "", new { @class = "text-danger" })
+                        <label>@Html.DisplayNameFor(model => model.CodProduto)</label>
+                    </div>
+                </div>
+
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ValorVenda, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ValorVenda, "", new { @class = "text-danger" })
+                        <label>@Html.DisplayNameFor(model => model.ValorVenda)</label>
+                    </div>
+                </div>
+
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SugestaoPreco, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SugestaoPreco, "", new { @class = "text-danger" })
+                        <label>@Html.DisplayNameFor(model => model.SugestaoPreco)</label>
+                    </div>
+                </div>
+                <label>@Html.DisplayNameFor(model => model.CorId)</label>
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.DropDownList("CorId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CorId, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <label>@Html.DisplayNameFor(model => model.ColecaoId)</label>
+                <div class="input-field col s6">
+                    <div class="col-md-10">
+                        @Html.DropDownList("ColecaoId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ColecaoId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <label>@Html.DisplayNameFor(model => model.Tamanhos)</label>
+                <div class="input-field col s6">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Tamanhos, new SelectList(ViewBag.Tamanhos, "TamanhoId", "Nome"), new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Tamanhos, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="btn #1976d2 blue darken-2" onclick="AddTam();" id="AddTam">
+                                Adicionar Tamanho
+                                <i class="material-icons right">add</i>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                               
+                                    <ul id="lstTam">
+
+
+                                    </ul>
+                            
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="input-field col s6">
+
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Pontos, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Pontos, "", new { @class = "text-danger" })
+                        <label>@Html.DisplayNameFor(model => model.Pontos)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+                        <input type="submit" value="Adicionar" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    <script>
+
+        function AddTam() {
+
+
+
+            $("#lstTam").append("<li class='chip gradient-45deg-light-blue-cyan' style='color:#FFF'>" + $("#Tamanhos option:selected").text() +
+                "<input type='checkbox' name='chkTam' id='chkTam' class='chkTam' checked='checked' value='" +
+                $("#Tamanhos option:selected").val() + "'></li>"              
+                );
+        };
+
+
+
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

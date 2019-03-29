@@ -11,6 +11,7 @@ namespace revSpeed.Models
     public class Tamanho
     {
 
+        
         public int TamanhoId { get; set; }
 
         [Required]
@@ -19,10 +20,12 @@ namespace revSpeed.Models
         [Index("Tamanho_index", IsUnique = true)]
         public string Nome { get; set; }
 
-        
+
         [Column(TypeName = "DateTime2")]
         [HiddenInput(DisplayValue = false)]
         [ScaffoldColumn(false)]
         public DateTime DataCreate { get; set; }
+
+        public List<Produto> Produtos { get; set; }
     }
 }

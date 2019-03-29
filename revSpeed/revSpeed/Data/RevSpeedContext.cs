@@ -14,5 +14,9 @@ namespace revSpeed.Data
         public System.Data.Entity.DbSet<revSpeed.Models.Colecao> Colecaos { get; set; }
 
         public System.Data.Entity.DbSet<revSpeed.Models.Tamanho> Tamanhos { get; set; }
+
+        public System.Data.Entity.DbSet<revSpeed.Models.Material> Materials { get; set; }
+
+        public System.Data.Entity.DbSet<revSpeed.Models.Produto> Produtoes { get; set; }
     }
 }

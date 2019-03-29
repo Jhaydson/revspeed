@@ -28,5 +28,8 @@ namespace revSpeed.Models
         [ScaffoldColumn(false)]
         public DateTime DataCreate { get; set; }
 
+        //Relacionamentos
+        public virtual ICollection<Produto> Produtos { get; set; }
+
     }
 }
