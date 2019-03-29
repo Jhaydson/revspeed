@@ -1,0 +1,150 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model <#= ViewDataTypeName #>
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewDataTypeShortName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<!--breadcrumbs start-->
+<div id="breadcrumbs-wrapper">
+    <!-- Search for small screen -->
+    <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+        <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col s10 m6 l6">
+                <h5 class="breadcrumbs-title">@ViewBag.Title</h5>
+                <ol class="breadcrumbs">
+                    <li><a href="#">Configurações Gerais</a></li>
+                    <li class="active">@ViewBag.Title</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<#
+    PushIndent("    ");
+}
+#>
+
+
+
+<div class="container">
+    <div class="section">
+        <div class="col s12">
+            <div>
+                
+
+<#
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+	<a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+    <a class=" waves-effect waves-light  btn #757575 grey darken-1" href="@Url.Action("Edit", new { id = Model.<#= pkName #> })"><i class="material-icons left">mode_edit</i>Editar</a>
+
+   
+<#
+} else {
+#>
+
+	<a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+	<a class=" waves-effect waves-light  btn #757575 grey darken-1" href="@Url.Action("Edit", new { /* id = Model.PrimaryKey */> })"><i class="material-icons left">mode_edit</i>Editar</a>
+
+<#
+}
+#>
+
+            </div> <br />
+            <table class="Highlight striped">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th>Descrição</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+<#
+foreach (PropertyMetadata property in ModelMetadata.Properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+       <td> @Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>) </td>    
+      <td>  @Html.DisplayFor(model => model.<#= GetValueExpression(property) #>)</td>
+					</tr>
+					<#
+    }
+}
+#>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+  
+
+
+
+
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

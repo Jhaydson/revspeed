@@ -1,0 +1,175 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model IEnumerable<#= "<" + ViewDataTypeName + ">" #>
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewDataTypeShortName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+
+<style>
+    .bt-gg {
+        width: 100%;
+    }
+</style>
+
+
+<!--breadcrumbs start-->
+<div id="breadcrumbs-wrapper">
+    <!-- Search for small screen -->
+    <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+        <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col s10 m6 l6">
+                <h5 class="breadcrumbs-title">@ViewBag.Title</h5>
+                <ol class="breadcrumbs">
+                    <li><a href="#">Configurações Gerais</a></li>
+                    <li class="active">@ViewBag.Title</li>
+
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="section">
+        <div id="table-datatables">
+            <div class="row">
+                <div class="col s12">
+<p>
+    @Html.ActionLink("Adicionar Novo", "Create", new{}, new{@class="waves-effect waves-light btn-large bt-gg"})
+</p>
+
+
+
+<table class="reponsive-table display striped highlight" cellpadding="0">
+    <tr>
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <th>
+            @Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
+        </th>
+<#
+    }
+}
+#>
+        <th>Ação</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+<#
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <td>
+            @Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
+        </td>
+<#
+    }
+}
+
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+        <td>
+		 <a class="btn-floating #757575 grey darken-1" href="@Url.Action("Edit",  new { id = item.<#= pkName #> })"><i class="material-icons">mode_edit</i></a> |
+         <a class="btn-floating #1976d2 blue darken-2" href="@Url.Action("Details", new { id = item.<#= pkName #> })"><i class="material-icons">remove_red_eye</i></a> |
+         <a class="btn-floating #e53935 red darken-1" href="@Url.Action("Delete",  new { id = item.<#= pkName #> })"><i class="material-icons">delete</i></a>
+
+        </td>
+<#
+} else {
+#>
+        <td>
+		<a class="btn-floating #757575 grey darken-1" href="@Url.Action("Edit",  new { /* id=item.PrimaryKey */ })"><i class="material-icons">mode_edit</i></a> |
+         <a class="btn-floating #1976d2 blue darken-2" href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })"><i class="material-icons">remove_red_eye</i></a> |
+         <a class="btn-floating #e53935 red darken-1" href="@Url.Action("Delete",  new { /* id=item.PrimaryKey */ })"><i class="material-icons">delete</i></a>
+            
+        </td>
+<#
+}
+#>
+    </tr>
+}
+
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>
