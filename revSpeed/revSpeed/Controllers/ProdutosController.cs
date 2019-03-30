@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -43,7 +43,14 @@ namespace revSpeed.Controllers
         {
             ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome");
             ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome");
-            ViewBag.Tamanhos = db.Tamanhos.ToList();
+
+            var tamanhos = db.Tamanhos.Select(c => new
+            {
+                TamanhoID = c.TamanhoId,
+                TamNome = c.Nome
+            }).ToList();
+
+            ViewBag.Tamanhos = new MultiSelectList(tamanhos, "TamanhoID", "TamNome");
             return View();
         }
 
@@ -52,32 +59,27 @@ namespace revSpeed.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProdutoId,Nome,CodProduto,ValorVenda,SugestaoPreco,CorId,ColecaoId,Pontos,DataCreate")] Produto produto)
+        public async Task<ActionResult> Create([Bind(Include = "ProdutoId,Nome,CodProduto,ValorVenda,SugestaoPreco,CorId,ColecaoId,Pontos,DataCreate")] Produto produto, int[] tamanhoId)
         {
-            var lstTam = Request.Form["chkTam"];
-            if (!string.IsNullOrEmpty(lstTam))
+            if (tamanhoId.Count() > 0)
             {
-                int[] splTams = lstTam.Split(',').Select(Int32.Parse).ToArray();
-
-
-                if (splTams.Count() > 0) {
-                    var ProdTams = db.Tamanhos.Where(w => splTams.Contains(w.TamanhoId)).ToList();
-                    produto.Tamanhos.AddRange(ProdTams);
-                }
+                var ProdTams = db.Tamanhos.Where(w => tamanhoId.Contains(w.TamanhoId)).ToList();
+                produto.Tamanhos.AddRange(ProdTams);
             }
-
+            
             if (ModelState.IsValid)
             {
 
-			try{
+                try
+                {
 
-                db.Produtoes.Add(produto);
-                await db.SaveChangesAsync();
-			}
-				catch (System.Exception)
+                    db.Produtoes.Add(produto);
+                    await db.SaveChangesAsync();
+                }
+                catch (System.Exception)
                 {
                     ModelState.AddModelError(string.Empty, "Não possível adicionar, por ter um item cadastrado com esse mesmo nome!");
-                    return View( produto);
+                    return View(produto);
                     throw;
                 }
                 return RedirectToAction("Index");
@@ -114,17 +116,18 @@ namespace revSpeed.Controllers
         {
             if (ModelState.IsValid)
             {
-			try{
+                try
+                {
 
-                db.Entry(produto).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-			}
-				catch (System.Exception)
-					{
-						ModelState.AddModelError(string.Empty, "Não possível adicionar, por ter um item cadastrado com esse mesmo nome!");
-						return View(produto);
-						throw;
-					}
+                    db.Entry(produto).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
+                catch (System.Exception)
+                {
+                    ModelState.AddModelError(string.Empty, "Não possível adicionar, por ter um item cadastrado com esse mesmo nome!");
+                    return View(produto);
+                    throw;
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome", produto.ColecaoId);

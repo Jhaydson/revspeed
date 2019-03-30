@@ -84,31 +84,13 @@
                 <label>@Html.DisplayNameFor(model => model.Tamanhos)</label>
                 <div class="input-field col s6">
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Tamanhos, new SelectList(ViewBag.Tamanhos, "TamanhoId", "Nome"), new { @class = "text-danger" })
+                        @Html.DropDownList("TamanhoID", (MultiSelectList)ViewBag.Tamanhos, new { multiple = "multiple" })
                         @Html.ValidationMessageFor(model => model.Tamanhos, "", new { @class = "text-danger" })
-                        <div class="row">
-                            <div class="btn #1976d2 blue darken-2" onclick="AddTam();" id="AddTam">
-                                Adicionar Tamanho
-                                <i class="material-icons right">add</i>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            
-                               
-                                    <ul id="lstTam">
-
-
-                                    </ul>
-                            
-                        </div>
-
 
                     </div>
                 </div>
 
                 <div class="input-field col s6">
-
 
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Pontos, new { htmlAttributes = new { @class = "form-control" } })
@@ -135,9 +117,7 @@
     <script>
 
         function AddTam() {
-
-
-
+                       
             $("#lstTam").append("<li class='chip gradient-45deg-light-blue-cyan' style='color:#FFF'>" + $("#Tamanhos option:selected").text() +
                 "<input type='checkbox' name='chkTam' id='chkTam' class='chkTam' checked='checked' value='" +
                 $("#Tamanhos option:selected").val() + "'></li>"              
