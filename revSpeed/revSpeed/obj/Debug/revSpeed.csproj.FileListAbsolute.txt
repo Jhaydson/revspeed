@@ -216,5 +216,3 @@ C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.csproj.CoreCompileInputs.c
 C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.csproj.CopyComplete
 C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.dll
 C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.pdb
-C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.Migrations._29032019.resources
-C:\Temp\revspeed\revSpeed\revSpeed\obj\Debug\revSpeed.csproj.GenerateResource.cache

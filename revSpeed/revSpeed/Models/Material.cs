@@ -24,11 +24,12 @@ namespace revSpeed.Models
         [Index("Composicao_index", IsUnique = true)]
         public string Composicao { get; set; }
 
-        
+
         [Column(TypeName = "DateTime2")]
         [HiddenInput(DisplayValue = false)]
         [ScaffoldColumn(false)]
         public DateTime DataCreate { get; set; }
 
+        public virtual ICollection<Produto> Produtos { get; set; }
     }
 }

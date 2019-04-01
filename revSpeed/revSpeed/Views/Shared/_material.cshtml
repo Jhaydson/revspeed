@@ -248,11 +248,12 @@ Author URL: https://themeforest.net/user/pixinvent/portfolio
             </ul>
             <!-- Templatesdropdown -->
             <ul id="Templatesdropdown" class="dropdown-content dropdown-horizontal-list">
-                <li><a href="../collapsible-menu/">Cadastrar Produto</a></li>
-                <li><a asp-area="" asp-controller="Categories" asp-action="Index">Categorias de Produtos</a></li>
-                <li><a href="../fixed-menu/">Fixed Menu</a></li>
-                <li><a href="../overlay-menu/">Overlay Menu</a></li>
-                <li><a href="../horizontal-menu/">Horizontal Menu</a></li>
+                <li><a href="@Url.Action("Index", "Produtos")">Produtos</a></li>
+                <li><a href="@Url.Action("Index", "Cores")">Cores</a></li>
+                <li><a href="@Url.Action("Index", "Colecaos")">Coleções</a></li>
+                <li><a href="@Url.Action("Index", "Materials")">Materiais</a></li>
+                <li><a href="@Url.Action("Index", "Tamanhos")">Tamanhos</a></li>
+
             </ul>
             <!-- Cardsdropdown -->
             <ul id="Cardsdropdown" class="dropdown-content dropdown-horizontal-list">

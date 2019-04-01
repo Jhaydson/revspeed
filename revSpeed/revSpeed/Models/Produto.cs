@@ -45,22 +45,26 @@ namespace revSpeed.Models
 
         [Required]
         [Display(Name = "Cor")]
-        [Range(1, int.MaxValue, ErrorMessage = "Você precisa selecionar uma opção.")]
+        
         public int CorId { get; set; }
 
         [Required]
         [Display(Name = "Coleção")]
-        [Range(1, int.MaxValue, ErrorMessage = "Você precisa selecionar uma opção.")]
+        
         public int ColecaoId { get; set; }
 
+        [Required]
+        [Display(Name = "Material")]
+        
+        public int MaterialId { get; set; }
 
         public float Pontos { get; set; }
 
-
-
+        
         //Relacionamentos
         public virtual Cor Cores { get; set; }
         public virtual Colecao Colecoes { get; set; }
+        public virtual Material Materias { get; set; }
 
         public List<Tamanho> Tamanhos { get; set; }
 

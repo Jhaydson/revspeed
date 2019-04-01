@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using revSpeed.Data;
 using revSpeed.Models;
+using revSpeed.Models.ViewsModels;
 
 namespace revSpeed.Controllers
 {
@@ -41,8 +42,14 @@ namespace revSpeed.Controllers
         // GET: Produtos/Create
         public ActionResult Create()
         {
-            ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome");
-            ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome");
+
+            ProdutoViewModel model = new ProdutoViewModel();
+            model.Produtos = new Produto();
+            model.Custos = new CustoProduto();
+
+            ViewBag.Cor = new SelectList(db.Cors, "CorId", "Nome");
+            ViewBag.Material = new SelectList(db.Materials, "MaterialId", "Nome");
+            ViewBag.Colecao = new SelectList(db.Colecaos, "ColecaoId", "Nome");
 
             var tamanhos = db.Tamanhos.Select(c => new
             {
@@ -50,8 +57,9 @@ namespace revSpeed.Controllers
                 TamNome = c.Nome
             }).ToList();
 
+
             ViewBag.Tamanhos = new MultiSelectList(tamanhos, "TamanhoID", "TamNome");
-            return View();
+            return View(model);
         }
 
         // POST: Produtos/Create
@@ -59,21 +67,21 @@ namespace revSpeed.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProdutoId,Nome,CodProduto,ValorVenda,SugestaoPreco,CorId,ColecaoId,Pontos,DataCreate")] Produto produto, int[] tamanhoId)
+        public async Task<ActionResult> Create(int[] tamanhoId, ProdutoViewModel produto)
         {
-            if (tamanhoId.Count() > 0)
-            {
-                var ProdTams = db.Tamanhos.Where(w => tamanhoId.Contains(w.TamanhoId)).ToList();
-                produto.Tamanhos.AddRange(ProdTams);
-            }
-            
+
             if (ModelState.IsValid)
             {
+                
+                if (tamanhoId.Count() > 0)
+                {
+                    var ProdTams = db.Tamanhos.Where(w => tamanhoId.Contains(w.TamanhoId)).ToList();
+                    produto.Produtos.Tamanhos.AddRange(ProdTams);
+                }
 
                 try
                 {
-
-                    db.Produtoes.Add(produto);
+                    db.Produtoes.Add(produto.Produtos);
                     await db.SaveChangesAsync();
                 }
                 catch (System.Exception)
@@ -84,9 +92,12 @@ namespace revSpeed.Controllers
                 }
                 return RedirectToAction("Index");
             }
+           
 
-            ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome", produto.ColecaoId);
-            ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome", produto.CorId);
+
+
+            ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome", produto.Produtos.ColecaoId);
+            ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome", produto.Produtos.ColecaoId);
             return View(produto);
         }
 
