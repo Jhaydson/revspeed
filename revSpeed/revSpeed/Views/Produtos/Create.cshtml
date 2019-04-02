@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Custos.Malha, new { htmlAttributes = new { @class = "form-control", @onblur = "calcMalha();" } })
+                                    @Html.TextBoxFor(model => model.Custos.Malha, new { @class = "form-control", @onblur = "calcMalha();" })
                                     @Html.ValidationMessageFor(model => model.Custos.Malha, "", new { @class = "text-danger" })
                                     <label>@Html.DisplayNameFor(model => model.Custos.Malha)</label>
                                 </div>
@@ -211,29 +211,11 @@
     <script>
 
         $(function () {
-             $('#Custos_Malha').maskMoney();
+            $('#Custos_Malha').maskMoney();
+            $('#Custos_Corte').maskMoney();
+            $('#Custos_Costura').maskMoney();
+            $('#Custos_Estampa').maskMoney();
         })
-
-
-
-
-
-
-        $(document).ready(function () {
-            /**
-            document.getElementById('Custos_Malha').value = "00.00";
-            $('#Custos_Malha').mask('000.000.000.000.000.00', { reverse: true });
-            document.getElementById('Custos_Corte').value = "00.00";
-            $('#Custos_Corte').mask('000.000.000.000.000.00', { reverse: true });
-            document.getElementById('Custos_Costura').value = "00.00";
-            $('#Custos_Costura').mask('000.000.000.000.000.00', { reverse: true });
-            document.getElementById('Custos_Estampa').value = "00.00";
-            $('#Custos_Estampa').mask('000.000.000.000.000.00', { reverse: true });
-            document.getElementById('Custos_ValorCusto').value = "00.00";
-            $('#Custos_ValorCusto').mask('000.000.000.000.000.00', { reverse: true });
-            **/
-
-        });
 
         function calcMargem() {
             debugger;
@@ -254,13 +236,18 @@
             valorvenda = summargem + valorcusto;
             sugestaopreco = valorvenda * (margem / 100);
             valorsugestaorevenda = valorvenda + sugestaopreco;
+           
 
             valorsugestaorevenda = parseFloat(valorsugestaorevenda.toFixed(2));
-            valorvenda = parseFloat(valorsugestaorevenda.toFixed(2));
+            valorvenda = parseFloat(valorvenda.toFixed(2));
 
+            valorsugestaorevenda = valorsugestaorevenda.toString().replace(".", ",");
+            valorvenda = valorvenda.toString().replace(".", ",");
+            valorcusto = valorcusto.toString().replace(".", ",");
 
             document.getElementById('Produtos_ValorVenda').value = valorvenda;
             document.getElementById('Produtos_SugestaoPreco').value = valorsugestaorevenda;
+            document.getElementById('Custos_ValorCusto').value = valorcusto;
 
 
         }
@@ -298,7 +285,7 @@
         }
 
         function calcEstampa() {
-            debugger;
+            
             var malha = $("#Custos_Malha").val();
             malha = parseFloat(malha);
 
@@ -311,9 +298,23 @@
             var estampa = $("#Custos_Estampa").val();
             estampa = parseFloat(estampa);
 
-            var result = malha + corte + costura + estampa;
+            var custoPeca = malha + corte + costura + estampa;
 
-            document.getElementById('Custos_ValorCusto').value = result;
+           
+
+            malha = malha.toString().replace(".", ",");
+            corte = corte.toString().replace(".", ",");
+            costura = costura.toString().replace(".", ",");
+            estampa = estampa.toString().replace(".", ",");
+            
+
+
+            document.getElementById('Custos_Malha').value = malha;
+            document.getElementById('Custos_Corte').value = corte;
+            document.getElementById('Custos_Costura').value = costura;
+            document.getElementById('Custos_Estampa').value = estampa;
+            document.getElementById('Custos_ValorCusto').value = custoPeca;
+            
         }
 
 
@@ -341,7 +342,7 @@
 
 
     </script>
-    
+
     @Scripts.Render("~/bundles/validations_pt-br")
     @Scripts.Render("~/bundles/jqueryval")
 }

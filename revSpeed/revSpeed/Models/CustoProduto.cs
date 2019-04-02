@@ -10,20 +10,40 @@ namespace revSpeed.Models
     public class CustoProduto
     {
         public int CustoProdutoId { get; set; }
-        
-        [Range(10, 9999.99,
-            ErrorMessage = "O preço de custo da malha deve ser entre " + "10,00 a 99999,99.")]
+
         [DisplayName("Preço da Malha")]
-        public decimal? Malha { get; set; }
- 
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        public double Malha { get; set; }
+
+        [DisplayName("Preço do Corte")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double Corte { get; set; }
 
+        [DisplayName("Preço da Costura")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double Costura { get; set; }
 
+        [DisplayName("Preço da Estampa")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double Estampa { get; set; }
 
+        [DisplayName("Valor Total de Custos")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double ValorCusto { get; set; }
 
+        [DisplayName("Margem de Lucro")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double MargemLucro { get; set; }
+
+        public int ProdutoId { get; set; }
+
+        public virtual Produto Produtos { get; set; }
+
     }
 }

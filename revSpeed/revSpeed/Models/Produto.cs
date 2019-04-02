@@ -33,10 +33,14 @@ namespace revSpeed.Models
 
         [Required]
         [Display(Name = "Valor de Venda")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double ValorVenda { get; set; }
 
 
         [Display(Name = "Sugestão de Preço")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public double SugestaoPreco { get; set; }
 
         [Required]
@@ -66,6 +70,6 @@ namespace revSpeed.Models
         [ScaffoldColumn(false)]
         public DateTime DataCreate { get; set; }
 
-
+        public virtual ICollection<CustoProduto> CustosP { get; set; }
     }
 }

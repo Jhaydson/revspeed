@@ -69,6 +69,10 @@ namespace revSpeed.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProdutoViewModel produto, int[] tamanhoId)
         {
+
+            produto.Produtos.DataCreate = DateTime.Now;
+
+
             if (ModelState.IsValid)
             {
                 
@@ -77,6 +81,8 @@ namespace revSpeed.Controllers
                     var ProdTams = db.Tamanhos.Where(w => tamanhoId.Contains(w.TamanhoId)).ToList();
                     produto.Produtos.Tamanhos.AddRange(ProdTams);
                 }
+
+
 
                 try
                 {
@@ -89,6 +95,14 @@ namespace revSpeed.Controllers
                     return View(produto);
                     throw;
                 }
+
+                if (produto.Produtos.ProdutoId != 0)
+                {
+                    produto.Custos.ProdutoId = produto.Produtos.ProdutoId;
+                    db.CustoProdutoes.Add(produto.Custos);
+                    await db.SaveChangesAsync();
+                }
+
                 return RedirectToAction("Index");
             }
            
