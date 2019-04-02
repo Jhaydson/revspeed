@@ -210,7 +210,17 @@
 @section Scripts {
     <script>
 
+        $(function () {
+             $('#Custos_Malha').maskMoney();
+        })
+
+
+
+
+
+
         $(document).ready(function () {
+            /**
             document.getElementById('Custos_Malha').value = "00.00";
             $('#Custos_Malha').mask('000.000.000.000.000.00', { reverse: true });
             document.getElementById('Custos_Corte').value = "00.00";
@@ -221,23 +231,33 @@
             $('#Custos_Estampa').mask('000.000.000.000.000.00', { reverse: true });
             document.getElementById('Custos_ValorCusto').value = "00.00";
             $('#Custos_ValorCusto').mask('000.000.000.000.000.00', { reverse: true });
-            document.getElementById('Produtos_ValorVenda').value = "00,00";
-            $('#Produtos_ValorVenda').mask('000.000.000.000.000,00', { reverse: true });
-            document.getElementById('Produtos_SugestaoPreco').value = "00,00";
-            $('#Produtos_SugestaoPreco').mask('000.000.000.000.000,00', { reverse: true });
+            **/
 
         });
 
         function calcMargem() {
+            debugger;
 
-            var margem = $("#Custos_MargemLucro").val();
+            var margem = 0;
+            var valorcusto = 0;
+            var summargem = 0;
+            var valorvenda = 0;
+            var sugestaopreco = 0;
+            var valorsugestaorevenda = 0;
+
+
+            margem = $("#Custos_MargemLucro").val();
             margem = parseFloat(margem);
-            var valorcusto = $("#Custos_ValorCusto").val();
+            valorcusto = $("#Custos_ValorCusto").val();
             valorcusto = parseFloat(valorcusto);
-            var summargem = valorcusto * (margem / 100);
+            summargem = valorcusto * (margem / 100);
             valorvenda = summargem + valorcusto;
             sugestaopreco = valorvenda * (margem / 100);
             valorsugestaorevenda = valorvenda + sugestaopreco;
+
+            valorsugestaorevenda = parseFloat(valorsugestaorevenda.toFixed(2));
+            valorvenda = parseFloat(valorsugestaorevenda.toFixed(2));
+
 
             document.getElementById('Produtos_ValorVenda').value = valorvenda;
             document.getElementById('Produtos_SugestaoPreco').value = valorsugestaorevenda;
@@ -278,6 +298,7 @@
         }
 
         function calcEstampa() {
+            debugger;
             var malha = $("#Custos_Malha").val();
             malha = parseFloat(malha);
 
@@ -289,7 +310,6 @@
 
             var estampa = $("#Custos_Estampa").val();
             estampa = parseFloat(estampa);
-
 
             var result = malha + corte + costura + estampa;
 
@@ -321,6 +341,7 @@
 
 
     </script>
-
+    
+    @Scripts.Render("~/bundles/validations_pt-br")
     @Scripts.Render("~/bundles/jqueryval")
 }

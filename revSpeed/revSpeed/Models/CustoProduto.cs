@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -9,32 +10,20 @@ namespace revSpeed.Models
     public class CustoProduto
     {
         public int CustoProdutoId { get; set; }
+        
+        [Range(10, 9999.99,
+            ErrorMessage = "O preço de custo da malha deve ser entre " + "10,00 a 99999,99.")]
+        [DisplayName("Preço da Malha")]
+        public decimal? Malha { get; set; }
+ 
+        public double Corte { get; set; }
 
-        [Display(Name = "Custo malha por peça")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float Malha { get; set; }
+        public double Costura { get; set; }
 
+        public double Estampa { get; set; }
 
-        [Display(Name = "Custo Corte por peça")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float Corte { get; set; }
+        public double ValorCusto { get; set; }
 
-
-        [Display(Name = "Custo Costura por peça")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float Costura { get; set; }
-
-
-        [Display(Name = "Custo Estampa por peça")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float Estampa { get; set; }
-
-        public float ValorCusto { get; set; }
-
-        public float MargemLucro { get; set; }
+        public double MargemLucro { get; set; }
     }
 }

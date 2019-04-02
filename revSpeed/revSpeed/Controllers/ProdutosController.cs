@@ -67,9 +67,8 @@ namespace revSpeed.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(int[] tamanhoId, ProdutoViewModel produto)
+        public async Task<ActionResult> Create(ProdutoViewModel produto, int[] tamanhoId)
         {
-
             if (ModelState.IsValid)
             {
                 

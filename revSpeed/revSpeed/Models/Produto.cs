@@ -33,34 +33,27 @@ namespace revSpeed.Models
 
         [Required]
         [Display(Name = "Valor de Venda")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float ValorVenda { get; set; }
+        public double ValorVenda { get; set; }
 
 
         [Display(Name = "Sugestão de Preço")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        public float SugestaoPreco { get; set; }
+        public double SugestaoPreco { get; set; }
 
         [Required]
         [Display(Name = "Cor")]
-        
         public int CorId { get; set; }
 
         [Required]
         [Display(Name = "Coleção")]
-        
         public int ColecaoId { get; set; }
 
         [Required]
         [Display(Name = "Material")]
-        
         public int MaterialId { get; set; }
 
-        public float Pontos { get; set; }
+        public double Pontos { get; set; }
 
-        
+
         //Relacionamentos
         public virtual Cor Cores { get; set; }
         public virtual Colecao Colecoes { get; set; }
