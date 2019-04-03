@@ -102,8 +102,6 @@ namespace revSpeed.Controllers
                 }
 
 
-
-
                 try
                 {
                     db.Produtoes.Add(produto.Produtos);
@@ -137,18 +135,26 @@ namespace revSpeed.Controllers
         // GET: Produtos/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+            ProdutoViewModel model = new ProdutoViewModel();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = await db.Produtoes.FindAsync(id);
-            if (produto == null)
+
+            model.Produtos = await db.Produtoes.FindAsync(id);
+            model.Custos = db.CustoProdutoes.Where(x => x.ProdutoId == model.Produtos.ProdutoId).FirstOrDefault();
+
+            if (model.Produtos == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome", produto.ColecaoId);
-            ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome", produto.CorId);
-            return View(produto);
+            ViewBag.ColecaoId = new SelectList(db.Colecaos, "ColecaoId", "Nome", model.Produtos.ColecaoId);
+            ViewBag.CorId = new SelectList(db.Cors, "CorId", "Nome", model.Produtos.CorId);
+            ViewBag.MaterialId = new SelectList(db.Cors, "MaterialId", "Nome", model.Produtos.CorId);
+
+           //Falta realizar a consulta dos tamanhos.
+            return View(model);
         }
 
         // POST: Produtos/Edit/5

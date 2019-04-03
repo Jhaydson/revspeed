@@ -1,132 +1,346 @@
-﻿@model revSpeed.Models.Produto
+﻿@model revSpeed.Models.ViewsModels.ProdutoViewModel
 
 @{
     ViewBag.Title = "Produto";
 }
 
 
-
-
-
-<!--breadcrumbs start-->
-<div id="breadcrumbs-wrapper">
-    <!-- Search for small screen -->
-    <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
-        <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title">@ViewBag.Title</h5>
-                <ol class="breadcrumbs">
-                    <li><a href="#">Configurações Gerais</a></li>
-                    <li class="active">@ViewBag.Title</li>
-
-                </ol>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Produtos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
+
+
     <div class="container">
         <div class="section">
-    <div class="form-horizontal">
-        
-       <div id="card-alert" class="card orange">
-            <div class="card-content white-text">
-                <p>@Html.ValidationSummary(true, "")</p>
-            </div>
-            <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        @Html.HiddenFor(model => model.ProdutoId)
+            <div class="row">
+                <div class="col s12 m12 l12">
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.Nome)</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                    <div class="card-panel">
+                        <div class="row">
+                            <div id="card-alert" class="card orange">
+                                <div class="card-content white-text">
+                                    Cadastro de Produto
+                                    <p>@Html.ValidationSummary(true, "")</p>
+                                </div>
+                                <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.CodProduto)</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CodProduto, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CodProduto, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.ValorVenda)</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ValorVenda, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ValorVenda, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Produtos.Nome, new { htmlAttributes = new { @class = "form-control", @onblur = "GerarCodigo();" } })
+                                    @Html.ValidationMessageFor(model => model.Produtos.Nome, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Produtos.Nome)</label>
+                                </div>
+                            </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.SugestaoPreco)</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SugestaoPreco, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SugestaoPreco, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Produtos.CodProduto, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Produtos.CodProduto, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Produtos.CodProduto)</label>
+                                </div>
+                            </div>
+                            <div class="file-field col s12">
+                                <div class="btn #1976d2 blue darken-2">
+                                    <span>Imagem do Produto</span>
+                                    <input type="file">
+                                    @Html.TextBoxFor(model => model.Produtos.ImageFile, new { type = "file", htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Custos.Malha, new { @class = "form-control", @onblur = "calcMalha();" })
+                                    @Html.ValidationMessageFor(model => model.Custos.Malha, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.Malha)</label>
+                                </div>
+                            </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.CorId)</label>
-           
-            <div class="col-md-10">
-			
-                @Html.DropDownList("CorId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CorId, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Custos.Corte, new { htmlAttributes = new { @class = "form-control", @onblur = "calcCorte();" } })
+                                    @Html.ValidationMessageFor(model => model.Custos.Corte, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.Corte)</label>
+                                </div>
+                            </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.ColecaoId)</label>
-           
-            <div class="col-md-10">
-			
-                @Html.DropDownList("ColecaoId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ColecaoId, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Custos.Costura, new { htmlAttributes = new { @class = "form-control", @onblur = "calcCostura();" } })
+                                    @Html.ValidationMessageFor(model => model.Custos.Costura, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.Costura)</label>
+                                </div>
+                            </div>
 
-        <div class="form-group">
-				 <label>@Html.DisplayNameFor(model => model.Pontos)</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pontos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Pontos, "", new { @class = "text-danger" })
-			
-            </div>
-        </div>
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Custos.Estampa, new { htmlAttributes = new { @class = "form-control", @onblur = "calcEstampa();" } })
+                                    @Html.ValidationMessageFor(model => model.Custos.Estampa, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.Estampa)</label>
+                                </div>
+                            </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-			<a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
-                <input type="submit" value="Salvar" class="btn btn-default" />
+
+
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Custos.ValorCusto, new { htmlAttributes = new { @class = "form-control", @onblur = "calcValor();" } })
+                                    @Html.ValidationMessageFor(model => model.Custos.ValorCusto, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.ValorCusto)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+
+
+
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Custos.MargemLucro, new { htmlAttributes = new { @class = "form-control", @onblur = "calcMargem();" } })
+                                    @Html.ValidationMessageFor(model => model.Custos.MargemLucro, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Custos.MargemLucro)</label>
+                                </div>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Produtos.ValorVenda, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Produtos.ValorVenda, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Produtos.ValorVenda)</label>
+                                </div>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Produtos.SugestaoPreco, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Produtos.SugestaoPreco, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Produtos.SugestaoPreco)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+
+                            <div class=" col s6">
+                                <label>@Html.DisplayNameFor(model => model.Produtos.CorId)</label>
+                                <div>
+                                    <div class="col-md-10">
+
+                                        @Html.DropDownList("CorId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Produtos.CorId, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col s6">
+                                <label>@Html.DisplayNameFor(model => model.Produtos.MaterialId)</label>
+                                <div>
+
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ColecaoId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Produtos.ColecaoId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=" col s6">
+                                <label>@Html.DisplayNameFor(model => model.Produtos.ColecaoId)</label>
+                                <div>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ColecaoId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Produtos.ColecaoId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="input-field col s6">
+
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Produtos.Pontos, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Produtos.Pontos, "", new { @class = "text-danger" })
+                                    <label>@Html.DisplayNameFor(model => model.Produtos.Pontos)</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
+                                    <input type="submit" value="Adicionar" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
-	</div>
-	</div>
 }
 
 
 
 @section Scripts {
+    <script>
+
+        $(function () {
+            $('#Custos_Malha').maskMoney();
+            $('#Custos_Corte').maskMoney();
+            $('#Custos_Costura').maskMoney();
+            $('#Custos_Estampa').maskMoney();
+        })
+
+        function calcMargem() {
+            debugger;
+
+            var margem = 0;
+            var valorcusto = 0;
+            var summargem = 0;
+            var valorvenda = 0;
+            var sugestaopreco = 0;
+            var valorsugestaorevenda = 0;
+
+
+            margem = $("#Custos_MargemLucro").val();
+            margem = parseFloat(margem);
+            valorcusto = $("#Custos_ValorCusto").val();
+            valorcusto = parseFloat(valorcusto);
+            summargem = valorcusto * (margem / 100);
+            valorvenda = summargem + valorcusto;
+            sugestaopreco = valorvenda * (margem / 100);
+            valorsugestaorevenda = valorvenda + sugestaopreco;
+
+
+            valorsugestaorevenda = parseFloat(valorsugestaorevenda.toFixed(2));
+            valorvenda = parseFloat(valorvenda.toFixed(2));
+
+            valorsugestaorevenda = valorsugestaorevenda.toString().replace(".", ",");
+            valorvenda = valorvenda.toString().replace(".", ",");
+            valorcusto = valorcusto.toString().replace(".", ",");
+
+            document.getElementById('Produtos_ValorVenda').value = valorvenda;
+            document.getElementById('Produtos_SugestaoPreco').value = valorsugestaorevenda;
+            document.getElementById('Custos_ValorCusto').value = valorcusto;
+
+
+        }
+
+        function calcMalha() {
+            var malha = $("#Custos_Malha").val();
+            malha = parseFloat(malha);
+            var result = malha;
+            document.getElementById('Custos_ValorCusto').value = result;
+        }
+
+        function calcCorte() {
+            var malha = $("#Custos_Malha").val();
+            malha = parseFloat(malha);
+
+            var corte = $("#Custos_Corte").val();
+            corte = parseFloat(corte);
+            var result = malha + corte;
+
+            document.getElementById('Custos_ValorCusto').value = result;
+        }
+
+        function calcCostura() {
+            var malha = $("#Custos_Malha").val();
+            malha = parseFloat(malha);
+
+            var corte = $("#Custos_Corte").val();
+            corte = parseFloat(corte);
+
+            var costura = $("#Custos_Costura").val();
+            costura = parseFloat(costura);
+            var result = malha + corte + costura;
+
+            document.getElementById('Custos_ValorCusto').value = result;
+        }
+
+        function calcEstampa() {
+
+            var malha = $("#Custos_Malha").val();
+            malha = parseFloat(malha);
+
+            var corte = $("#Custos_Corte").val();
+            corte = parseFloat(corte);
+
+            var costura = $("#Custos_Costura").val();
+            costura = parseFloat(costura);
+
+            var estampa = $("#Custos_Estampa").val();
+            estampa = parseFloat(estampa);
+
+            var custoPeca = malha + corte + costura + estampa;
+
+
+
+            malha = malha.toString().replace(".", ",");
+            corte = corte.toString().replace(".", ",");
+            costura = costura.toString().replace(".", ",");
+            estampa = estampa.toString().replace(".", ",");
+
+
+
+            document.getElementById('Custos_Malha').value = malha;
+            document.getElementById('Custos_Corte').value = corte;
+            document.getElementById('Custos_Costura').value = costura;
+            document.getElementById('Custos_Estampa').value = estampa;
+            document.getElementById('Custos_ValorCusto').value = custoPeca;
+
+        }
+
+
+
+        function AddTam() {
+            $("#lstTam").append("<li class='chip gradient-45deg-light-blue-cyan' style='color:#FFF'>" + $("#Tamanhos option:selected").text() +
+                "<input type='checkbox' name='chkTam' id='chkTam' class='chkTam' checked='checked' value='" +
+                $("#Tamanhos option:selected").val() + "'></li>"
+            );
+        };
+
+        function GerarCodigo() {
+
+            var nomeProduto = $("#Produtos_Nome").val();
+            var codigo = nomeProduto.match(/\b(\w)/gi);
+            var codigogerado = codigo.join('', '~').toUpperCase();
+            var dNow = new Date();
+            var coddate = dNow.getHours() + "" + (dNow.getMinutes() + 1)
+            var codigogerado = codigogerado + "789" + coddate;
+
+            document.getElementById('Produtos_CodProduto').value = codigogerado;
+
+        }
+
+
+
+    </script>
+
+    @Scripts.Render("~/bundles/validations_pt-br")
     @Scripts.Render("~/bundles/jqueryval")
 }

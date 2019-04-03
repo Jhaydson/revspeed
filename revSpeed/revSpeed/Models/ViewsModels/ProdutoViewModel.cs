@@ -9,5 +9,6 @@ namespace revSpeed.Models.ViewsModels
     {
         public Produto Produtos { get; set; }
         public CustoProduto Custos { get; set; }
+        public Tamanho Tamanhos { get; set; }
     }
 }

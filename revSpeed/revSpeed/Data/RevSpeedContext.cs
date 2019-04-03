@@ -21,6 +21,8 @@ namespace revSpeed.Data
 
         public System.Data.Entity.DbSet<revSpeed.Models.CustoProduto> CustoProdutoes { get; set; }
 
+        
+
 
     }
 }
