@@ -37,8 +37,7 @@ namespace revSpeed.Models
         public double ValorCusto { get; set; }
 
         [DisplayName("Margem de Lucro")]
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
+
         public double MargemLucro { get; set; }
 
         public int ProdutoId { get; set; }

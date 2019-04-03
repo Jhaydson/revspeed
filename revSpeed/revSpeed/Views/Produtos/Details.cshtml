@@ -1,7 +1,8 @@
 ﻿@model revSpeed.Models.ViewsModels.ProdutoViewModel
 
+
 @{
-    ViewBag.Title = "Produto";
+    ViewBag.Title = "Produtos";
 }
 
 
@@ -15,55 +16,92 @@
 
 
                 <a class=" waves-effect waves-light  btn #00e676 green accent-3" href="@Url.Action("Index")"> <i class="material-icons left">arrow_back</i>Voltar</a>
-                <a class=" waves-effect waves-light  btn #757575 grey darken-1" href="@Url.Action("Edit", new { id = Model.ProdutoId })"><i class="material-icons left">mode_edit</i>Editar</a>
+                <a class=" waves-effect waves-light  btn #757575 grey darken-1" href="@Url.Action("Edit", new { id = Model.Produtos.ProdutoId })"><i class="material-icons left">mode_edit</i>Editar</a>
 
 
 
             </div> <br />
-            <table class="Highlight striped">
-                <thead class="">
-                    <tr>
-                        <th></th>
-                        <th>Descrição</th>
+            <div class="row">
+                <div class="card-panel">
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.CodProduto) </td>
-                        <td>  @Html.DisplayFor(model => model.CodProduto)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.Nome) </td>
-                        <td>  @Html.DisplayFor(model => model.Nome)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.Cores.Nome) </td>
-                        <td>  @Html.DisplayFor(model => model.Cores.Nome)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.Colecoes.Nome) </td>
-                        <td>  @Html.DisplayFor(model => model.Colecoes.Nome)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.ValorVenda) </td>
-                        <td>  @Html.DisplayFor(model => model.ValorVenda)</td>
-                    </tr>
 
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.ValorVenda) </td>
-                        <td>  @Html.DisplayFor(model => model.ValorVenda)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.SugestaoPreco) </td>
-                        <td>  @Html.DisplayFor(model => model.SugestaoPreco)</td>
-                    </tr>
-                    <tr>
-                        <td> @Html.DisplayNameFor(model => model.Pontos) </td>
-                        <td>  @Html.DisplayFor(model => model.Pontos)</td>
-                    </tr>
-                </tbody>
-            </table>
+                    <table class="Highlight striped">
+                        <thead class="">
+                            <tr>
+                                <th style="width: 30%"></th>
+                                <th>Descrição</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.CodProduto) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.CodProduto)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.Nome) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.Nome)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.Image) </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(Model.Produtos.Image))
+                                    {
+                                        <img src="@Url.Content(Model.Produtos.Image)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.Cores.Nome) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.Cores.Nome)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.Colecoes.Nome) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.Colecoes.Nome)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.ValorVenda) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.ValorVenda)</td>
+                            </tr>
+
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.SugestaoPreco) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.SugestaoPreco)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Produtos.Pontos) </td>
+                                <td>  @Html.DisplayFor(model => model.Produtos.Pontos)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.Malha) </td>
+                                <td>  @Html.DisplayFor(model => model.Custos.Malha)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.Corte) </td>
+                                <td>  @Html.DisplayFor(model => model.Custos.Corte)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.Costura) </td>
+                                <td>  @Html.DisplayFor(model => model.Custos.Costura)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.Estampa) </td>
+                                <td>  @Html.DisplayFor(model => model.Custos.Estampa)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.ValorCusto) </td>
+                                <td>  @Html.DisplayFor(model => model.Custos.ValorCusto)</td>
+                            </tr>
+                            <tr>
+                                <td> @Html.DisplayNameFor(model => model.Custos.MargemLucro)</td>
+                                <td>  @Html.DisplayFor(model => model.Custos.MargemLucro)%</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </div>

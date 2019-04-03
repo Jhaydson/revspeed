@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using revSpeed.Data;
 using revSpeed.Models;
 using revSpeed.Models.ViewsModels;
+using SpeedSystem.Helpers;
 
 namespace revSpeed.Controllers
 {
@@ -27,17 +28,26 @@ namespace revSpeed.Controllers
         // GET: Produtos/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+
+            ProdutoViewModel model = new ProdutoViewModel();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = await db.Produtoes.FindAsync(id);
-            if (produto == null)
+            model.Produtos = await db.Produtoes.FindAsync(id);
+          //  model.Custos = await db.CustoProdutoes.FindAsync(model.Produtos.ProdutoId);
+            model.Custos = db.CustoProdutoes.Where( x=> x.ProdutoId ==  model.Produtos.ProdutoId).FirstOrDefault();
+
+            if (model.Produtos == null)
             {
                 return HttpNotFound();
             }
-            return View(produto);
+
+            return View(model);
         }
+
+
 
         // GET: Produtos/Create
         public ActionResult Create()
@@ -75,12 +85,22 @@ namespace revSpeed.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
+                var pic = string.Empty;
+                var folder = "~/Content/ProdutosImage";
+                if (produto.Produtos.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(produto.Produtos.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+                produto.Produtos.Image = pic;
+
                 if (tamanhoId.Count() > 0)
                 {
                     var ProdTams = db.Tamanhos.Where(w => tamanhoId.Contains(w.TamanhoId)).ToList();
                     produto.Produtos.Tamanhos.AddRange(ProdTams);
                 }
+
 
 
 

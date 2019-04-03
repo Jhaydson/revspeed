@@ -5,9 +5,11 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Produtos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
+
 
     <div class="container">
         <div class="section">
@@ -40,6 +42,16 @@
                                     @Html.EditorFor(model => model.Produtos.CodProduto, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Produtos.CodProduto, "", new { @class = "text-danger" })
                                     <label>@Html.DisplayNameFor(model => model.Produtos.CodProduto)</label>
+                                </div>
+                            </div>
+                            <div class="file-field col s12">
+                                <div class="btn #1976d2 blue darken-2">
+                                    <span>Imagem do Produto</span>
+                                    <input type="file">
+                                    @Html.TextBoxFor(model => model.Produtos.ImageFile, new { type = "file", htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
                                 </div>
                             </div>
                         </div>
@@ -236,7 +248,7 @@
             valorvenda = summargem + valorcusto;
             sugestaopreco = valorvenda * (margem / 100);
             valorsugestaorevenda = valorvenda + sugestaopreco;
-           
+
 
             valorsugestaorevenda = parseFloat(valorsugestaorevenda.toFixed(2));
             valorvenda = parseFloat(valorvenda.toFixed(2));
@@ -285,7 +297,7 @@
         }
 
         function calcEstampa() {
-            
+
             var malha = $("#Custos_Malha").val();
             malha = parseFloat(malha);
 
@@ -300,13 +312,13 @@
 
             var custoPeca = malha + corte + costura + estampa;
 
-           
+
 
             malha = malha.toString().replace(".", ",");
             corte = corte.toString().replace(".", ",");
             costura = costura.toString().replace(".", ",");
             estampa = estampa.toString().replace(".", ",");
-            
+
 
 
             document.getElementById('Custos_Malha').value = malha;
@@ -314,7 +326,7 @@
             document.getElementById('Custos_Costura').value = costura;
             document.getElementById('Custos_Estampa').value = estampa;
             document.getElementById('Custos_ValorCusto').value = custoPeca;
-            
+
         }
 
 

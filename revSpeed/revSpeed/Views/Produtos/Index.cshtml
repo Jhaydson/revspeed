@@ -49,6 +49,9 @@
             @Html.DisplayNameFor(model => model.CodProduto)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
@@ -71,6 +74,12 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.CodProduto)
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Image))
+            {
+                <img src="@Url.Content(item.Image)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Nome)
